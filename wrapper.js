@@ -2,8 +2,9 @@ var translate = require('./translate.js');
 var requireFromString = require('require-from-string');
 var https = require('https');
 var MemoryStream = require('memorystream');
+var path = require('path');
 
-function setupMethods (soljson) {
+function setupMethods (soljson, binPath) {
   var compileJSON = soljson.cwrap('compileJSON', 'string', ['string', 'number']);
   var compileJSONMulti = null;
   if ('_compileJSONMulti' in soljson) {
@@ -11,6 +12,8 @@ function setupMethods (soljson) {
   }
   var compileJSONCallback = null;
   var compileStandard = null;
+  var binPath = (binPath === undefined || !binPath) ? path.join(__dirname, 'bin') : binPath;
+
   if (('_compileJSONCallback' in soljson) || ('_compileStandard' in soljson)) {
     var copyString = function (str, ptr) {
       var buffer = soljson._malloc(str.length + 1);
@@ -198,7 +201,7 @@ function setupMethods (soljson) {
     supportsStandard: compileStandard !== null,
     // Use the given version if available.
     useVersion: function (versionString) {
-      return setupMethods(require('./bin/soljson-' + versionString + '.js'));
+      return setupMethods(require(path.join(binPath, 'soljson-' + versionString + '.js')));
     },
     // Loads the compiler of the given version from the github repository
     // instead of from the local filesystem.
