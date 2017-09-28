@@ -1,5 +1,5 @@
 const tape = require('tape');
-const solc = require('../index.js');
+const solc = require('../index.js')();
 
 tape('Version and license', function (t) {
   t.test('check version', function (st) {

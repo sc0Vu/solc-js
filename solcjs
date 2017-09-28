@@ -5,7 +5,7 @@ var originalUncaughtExceptionListeners = process.listeners("uncaughtException");
 
 var fs = require('fs-extra');
 var path = require('path');
-var solc = require('./index.js');
+var solc = require('./index.js')();
 // FIXME: remove annoying exception catcher of Emscripten
 //        see https://github.com/chriseth/browser-solidity/issues/167
 process.removeAllListeners('uncaughtException');

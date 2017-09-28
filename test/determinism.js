@@ -1,6 +1,6 @@
 const tape = require('tape');
 const fs = require('fs');
-const solc = require('../index.js');
+const solc = require('../index.js')();
 
 tape('Deterministic Compilation', function (t) {
   t.test('DAO', function (st) {
